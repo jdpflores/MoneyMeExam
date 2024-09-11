@@ -1,0 +1,155 @@
+﻿@model MoneyMeExam.Models.TblQouteViewModel;
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<form class="col-6" asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group" hidden>
+        <label asp-for="QouteId" class="control-label"></label>
+        <input asp-for="QouteId" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-6">
+                <label asp-for="Term" class="control-label font-weight-bold"></label>
+            </div>
+            <div class="col">
+                <output class="control-label" id="TermVal">0</output>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label class="control-label text-end">1</label>
+            </div>
+            <div class="col">
+                <input asp-for="Term" type="range" class="form-range" min="1" max="64" step="1" oninput="TermVal.value = this.value" />
+            </div>
+            <div class="col-2">
+                <label class="control-label text-start">64 Months</label>
+            </div>
+        </div>
+        <span asp-validation-for="Term" class="text-danger"></span>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label asp-for="Product" class="control-label"></label>
+        <select asp-for="Product" class="form-control" >
+            <option value="ProductA">ProductA</option>
+            <option value="ProductB">ProductB</option>
+            <option value="ProductC">ProductC</option>
+        </select>
+        <span asp-validation-for="Product" class="text-danger"></span>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-6">
+                <label asp-for="AmountRquired" class="control-label font-weight-bold"></label>
+            </div>
+            <div class="col">
+                <output class="control-label" id="AmountRquiredVal">0</output>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <label class="control-label text-end">$0</label>
+            </div>
+            <div class="col">
+                <input asp-for="AmountRquired" type="range" class="form-range" min="0" max="15000" step="100" oninput="AmountRquiredVal.value = this.value" />
+            </div>
+            <div class="col-2">
+                <label class="control-label text-start">$15,000</label>
+            </div>
+        </div>
+        <span asp-validation-for="AmountRquired" class="text-danger"></span>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <select asp-for="Title" class="form-control">
+                    <option value="Mr.">Mr.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Mrs.">Mrs.</option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger" placeholder="First Name"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger" placeholder="Last Name"></span>
+            </div>
+        </div>
+    </div>
+    
+    <br />
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger" placeholder="Email"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" />
+                <span asp-validation-for="Mobile" class="text-danger" placeholder="Mobile Number"></span>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input type="date" asp-for="DateOfBirth" value=@Model.DateOfBirth.ToString("yyyy-MM-dd") class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger" placeholder="Date of Birth"></span>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group text-center">
+        <div class="row">
+            <div class="col">
+                <input type="submit" value="Calculate Qoute" class="btn btn-primary"
+                       onclick="return confirm('Are you sure you want to Save this? ')" />
+            </div>
+        </div>
+        <div class="row">
+            <span style="font-size: 70%">Qoute does not affect your Credit Score</span>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $(window).on('load', function () {
+        var termval = $("input[name='Term']").val();
+        $("#TermVal").val(termval);
+
+        var amountreqval = $("input[name='AmountRquired']").val();
+        $("#AmountRquiredVal").val(amountreqval);
+    });
+</script>
