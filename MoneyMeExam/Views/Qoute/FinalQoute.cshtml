@@ -1,0 +1,136 @@
+﻿@model TblQouteViewModel;
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<form class="col-4" asp-action="FinalQoute">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group" hidden>
+        <input asp-for="QouteId" class="form-control" />
+        <input asp-for="AmountRquired" class="form-control" />
+        <input asp-for="Product" class="form-control" />
+        <input asp-for="Term" class="form-control" />
+        <input asp-for="Title" class="form-control" />
+        <input asp-for="FirstName" class="form-control" />
+        <input asp-for="LastName" class="form-control" />
+        <input asp-for="DateOfBirth" class="form-control" />
+        <input asp-for="Mobile" class="form-control" />
+        <input asp-for="Email" class="form-control" />
+        <input asp-for="TblLoan.QouteId" class="form-control" />
+        <input asp-for="TblLoan.FinanceAmount" class="form-control" />
+        <input asp-for="TblLoan.WeeklyRepayment" class="form-control" />
+        <input asp-for="TblLoan.TotalRepayment" class="form-control" />
+        <input asp-for="TblLoan.NoOfWeeks" class="form-control" />
+        <input asp-for="TblLoan.EstablishmentFee" class="form-control" />
+        <input asp-for="TblLoan.InterestPerc" class="form-control" />
+        <input asp-for="TblLoan.InterestAmount" class="form-control" />
+        <input asp-for="IsMobileValid" class="form-control" />
+        <input asp-for="IsMobileValid" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <div class="row text-center">
+            <h2>Your Qoute</h2>
+        </div>
+        <br />
+        <div class ="row">
+            <div class="col-6 text-start">
+                <h4 class="control-label">Your information</h4>
+            </div>
+            @* <div class="col-6 text-end">
+                <label class="control-label">Edit</label>
+            </div> *@
+        </div>
+        <div class="row">
+            <div class="col-6 text-start">
+                <label class="control-label">Name</label>
+            </div>
+            <div class="col-6 text-end">
+            <label class="control-label">@Model.FirstName @Model.LastName</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-start">
+                <label class="control-label">Mobile</label>
+            </div>
+            <div class="col-6 text-end">
+                <label class="control-label">@Model.Mobile</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-start">
+                <label class="control-label">Email</label>
+            </div>
+            <div class="col-6 text-end">
+                <label class="control-label">@Model.Email</label>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-6 text-start">
+                <h4 class="control-label">Finance details</h4>
+            </div>
+            @* <div class="col-6 text-end">
+            <label class="control-label">Edit</label>
+            </div> *@
+        </div>
+        <div class="row">
+            <div class="col-6 text-start">
+                <label class="control-label">Finance amount</label>
+            </div>
+            <div class="col-6 text-end">
+                <label class="control-label">$@Model.AmountRquired</label>
+            </div>
+        </div>
+        <div class="row">
+            <span class="text-center" style="font-size: 70%">-------------------------------------------------------------------------- over @Model.Term months</span>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-6 text-start">
+                <label class="control-label">Repayment from</label>
+            </div>
+            <div class="col-6 text-end">
+                <label class="control-label">$@Model.TblLoan.WeeklyRepayment</label>
+            </div>
+        </div>
+        <div class="row" >
+            <span class="text-center" style="font-size: 70%">-------------------------------------------------------------------------------------- Weekly</span>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col text-center">
+                <input type="submit" value="Apply Now" class="btn btn-primary"
+                       onclick="ValidateBlacklist" />
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <span style="font-size: 70%">Total repayments $@Model.TblLoan.TotalRepayment, made up of an establishment fee of $@Model.TblLoan.EstablishmentFee</span>
+            <span style="font-size: 70%">Interest of $@Model.TblLoan.InterestAmount. The repayment amount is based on the variables</span>
+            <span style="font-size: 70%">selected, is subject to our assessment and suitability, and other important</span>
+            <span style="font-size: 70%">terms and condition apply</span>
+        </div>
+    </div>
+
+
+
+</form>
+<script>
+     function ValidateBlacklist() {
+        var IsMobileValid = $("input[name='IsMobileValid']").val();
+        var IsDomainValid = $("input[name='IsDomainValid']").val();
+
+         if (IsMobileValid && IsDomainValid) {
+             confirm('Are you sure you want to Save this? ');
+         }
+         else {
+             alert("This users is blacklisted");
+             return;
+         }
+
+    });
+</script>

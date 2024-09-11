@@ -14,7 +14,6 @@ namespace MoneyMeExam.Models
         [Required(ErrorMessage = "Select Amount Required")]
         public decimal AmountRquired { get; set; }
 
-
         [DisplayName("Product")]
         public string Product { get; set; } = "ProductA";
 
@@ -46,6 +45,8 @@ namespace MoneyMeExam.Models
         [Required(ErrorMessage = "Enter Email")]
         public string Email { get; set; } = null!;
 
-        public LoanDetails? LoanDetails { get; set; }
+        public bool? IsMobileValid { get; set; }
+        public bool? IsDomainValid { get; set; }
+        public TblLoan? TblLoan { get; set; }
     }
 }

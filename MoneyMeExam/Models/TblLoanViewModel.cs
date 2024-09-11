@@ -1,6 +1,6 @@
 ﻿namespace MoneyMeExam.Models
 {
-    public class LoanDetails
+    public class TblLoanViewModel
     {
         public int LoanId { get; set; }
         public int QouteId { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MoneyMeExam.Models;
+using MoneyMeExam.Services;
 
 namespace MoneyMeExam.Controllers
 {
@@ -17,18 +17,20 @@ namespace MoneyMeExam.Controllers
         public async Task<IActionResult> SaveQoute(TblQoute model)
         {
             //For testing purpose
-            if (model == null)
+            
+            if (model.FirstName == null &&
+                model.LastName == null)
             {
                 model = new TblQoute()
                 {
                     AmountRquired = 5000,
-                    Term = 2,
+                    Term = 24,
                     Title = "Mr.",
-                    FirstName = "John",
-                    LastName = "doe",
+                    FirstName = "Jethro",
+                    LastName = "Flores",
                     DateOfBirth = new DateTime(1900, 1, 1),
                     Mobile = "0422111333",
-                    Email = "layton@flower.com.au"
+                    Email = "jetflores@google.com"
                 };
             }
 
@@ -58,7 +60,6 @@ namespace MoneyMeExam.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(TblQouteViewModel model)
         { 
-
             return View(model); 
         }
 
@@ -66,8 +67,6 @@ namespace MoneyMeExam.Controllers
         [HttpPost] 
         public async Task<IActionResult> CreateAsync(TblQouteViewModel model)
         {
-
-
             return RedirectToAction("FinalQoute", model);
         }
 
@@ -75,8 +74,24 @@ namespace MoneyMeExam.Controllers
         [HttpGet]
         public async Task<IActionResult> FinalQoute(TblQouteViewModel model)
         {
+            QouteServices _qouteServices = new QouteServices(_context);
+
+            model.TblLoan = await _qouteServices.ProcessLoan(model);
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FinalQouteAsync(TblQouteViewModel model)
+        {
+            if (model.TblLoan != null)
+            {
+                _context.TblLoans.Add(model.TblLoan);
+                await _context.SaveChangesAsync();
+            }
+
+            model = new TblQouteViewModel();
+            return RedirectToAction("Create", model);
         }
     }
 }
